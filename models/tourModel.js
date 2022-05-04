@@ -153,12 +153,12 @@ tourSchema.pre('save', function (next) {
 // });
 
 // tourSchema.pre('save', (next) => {
-//   console.log('will save document ');
+//   // console.log('will save document ');
 //   next();
 // });
 
 // tourSchema.post('save', (doc, next) => {
-//   console.log(doc.slug);
+//   // console.log(doc.slug);
 //   next();
 // });
 

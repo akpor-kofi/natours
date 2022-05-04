@@ -3,8 +3,8 @@ const dotenv = require('dotenv');
 
 process.on('uncaughtException', (err) => {
   //handles uncaught synchronous codeB
-  console.log('UNCAUGHT EXCEPTION: shutting down');
-  console.log(err.name, '🥲', err.message);
+   console.log('UNCAUGHT EXCEPTION: shutting down');
+   console.log(err.name, '🥲', err.message);
   // should instantly crash the system cause your program is not in a clean state
   process.exit(1);
 });

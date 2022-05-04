@@ -49,7 +49,7 @@ const upload = multer({
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
-    console.log(el);
+    // console.log(el);
     if (allowedFields.includes(el)) newObj[el] = obj[el];
   });
 
@@ -73,7 +73,7 @@ exports.heicToJpeg = catchAsync(async (req, res, next) => {
 
 exports.resizeUserImage = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
-  console.log(req.file);
+  // console.log(req.file);
 
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
@@ -87,14 +87,14 @@ exports.resizeUserImage = catchAsync(async (req, res, next) => {
 });
 
 exports.getMe = (req, res, next) => {
-  console.log(req.user.id);
+  // console.log(req.user.id);
   req.params.id = req.user.id;
   next();
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
+  // console.log(req.file);
+  // console.log(req.body);
   // 1) create error if user posts password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(

@@ -49,14 +49,14 @@ if (updatePasswordForm) {
   updatePasswordForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     document.querySelector('.btn--save-password').textContext = 'Updating...';
-    console.log('start');
+    // console.log('start');
     const passwordCurrent = document.getElementById('password-current').value;
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('password-confirm').value;
     await updateSettings({passwordCurrent, password, passwordConfirm}, 'password');
 
     // clearing form field
-    console.log('stop');
+    // console.log('stop');
     document.querySelector('.btn--save-password').textContext = 'Save password';
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';

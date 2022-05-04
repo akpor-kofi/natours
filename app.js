@@ -7,6 +7,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const cors = require('cors');
 const AppError = require('./utils/appError');
@@ -86,8 +87,10 @@ app.use(
   })
 );
 
+app.use(compression());
+
 // app.use((req, res, next) => {
-//   console.log('hello from the middleware');
+//   // console.log('hello from the middleware');
 //   next();
 // });
 
@@ -129,7 +132,7 @@ app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
-  console.log('caught the exception');
+  // // console.log('caught the exception');
   // res.status(404).json({
   //   status: 'fail',
   //   message: `Can't find ${req.originalUrl} on this server.`,

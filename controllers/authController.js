@@ -12,7 +12,7 @@ const signToken = (id) =>
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
-const createSendToken = (user, statusCode, res, req = undefined) => {
+const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
@@ -47,7 +47,7 @@ exports.signup = catchAsync(async (req, res) => {
   const url = `${req.protocol}://${req.get('host')}/me`;
   await new Email(newUser, url).sendWelcome();
 
-  console.log('email sent');
+  // console.log('email sent');
 
   createSendToken(newUser, 201, res);
 });
@@ -56,11 +56,11 @@ exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   // 1) check if email and password exists
-  console.log('login side');
+  // console.log('login side');
   if (!email || !password) {
     return next(new AppError('Please provide email and password', 400));
   }
-  console.log(email, password);
+  // console.log(email, password);
 
   // 2) check if user exists and password is correct
   const user = await User.findOne({ email }).select('+password');
@@ -73,7 +73,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 3) if everything is OK, send token to client
 
-  createSendToken(user, 200, res, req);
+  createSendToken(user, 200, res);
 });
 
 //PROTECTING routes
@@ -153,7 +153,7 @@ exports.logout = (req, res) => {
     res.clearCookie('jwt');
     res.status(200).json({ status: 'success' });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -162,7 +162,7 @@ exports.restrictTo =
   //good use case for closures
   (req, _res, next) => {
     //roles ['admin', 'lead-guide']
-    console.log(req.user.role);
+    // console.log(req.user.role);
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError('you do not have permission to access this', 403)
@@ -190,9 +190,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetURL = `${req.protocol}://${req.get(
     'host'
   )}/api/v1/users/resetPassword/${resetToken}`;
-
-  const message = `Forgot your password? Submit a PATCH request to reset your password. ${resetURL}`;
-
   try {
     // await sendEmail({
     //   email: user.email,
@@ -228,7 +225,7 @@ exports.resetPassword = async (req, res, next) => {
     passwordResetExpires: { $gt: Date.now() - 2000 },
   });
 
-  console.log(user);
+  // console.log(user);
 
   // 2) If token has not expired, and there is user, set the new password
   if (!user) {

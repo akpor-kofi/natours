@@ -1,14 +1,14 @@
 const AppError = require('../utils/appError');
 
 const handleCastErrorDB = (err) => {
-  console.log('handling');
+  // console.log('handling');
   const message = `😇Invalid ${err.path}: ${err.value}`;
   return new AppError(message, 400);
 };
 
 const handleDuplicateFieldsDB = (err) => {
   //   const value = err.errmsg.match(/(["'])(\\?.)*?\1/);
-  //   console.log('😀', value);
+  //   // console.log('😀', value);
 
   const message = `Duplicate field value: ${err.keyValue.name}. Please use another value!`;
   return new AppError(message, 400);
@@ -16,7 +16,7 @@ const handleDuplicateFieldsDB = (err) => {
 
 const handleValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
-  console.log(errors);
+  // console.log(errors);
   const message = `invalid input data ${errors.join('. ')}`;
   return new AppError(message, 400);
 };
@@ -36,7 +36,7 @@ const sendErrorDev = (err, req, res) => {
     });
   }
   // rendered message
-  console.log(err);
+  // console.log(err);
   res.status(err.statusCode).render('error', {
     title: 'Something went wrong',
     msg: err.message,
@@ -52,7 +52,7 @@ const sendErrorProd = (err, req, res) => {
         message: err.message,
       });
     }
-    // console.error('ERROR 💥', err);
+    console.error('ERROR 💥', err);
 
     return res.status(500).json({
       status: 'error',
@@ -67,6 +67,7 @@ const sendErrorProd = (err, req, res) => {
       msg: err.message,
     });
   }
+  console.log(err);
   res.status(err.statusCode).render('error', {
     title: 'Something went wrong',
     msg: 'Please try it again later',

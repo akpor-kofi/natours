@@ -24,7 +24,7 @@ const longestCollatzSequence = (num) => {
     }
     count = 0;
   }
-  console.log(maxNum, maxCount);
+  // console.log(maxNum, maxCount);
 };
 
 // };
