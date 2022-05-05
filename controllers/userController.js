@@ -34,6 +34,7 @@ const factory = require('./handleFactory');
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
+  console.log(file);
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {
@@ -59,7 +60,7 @@ const filterObj = (obj, ...allowedFields) => {
 exports.uploadUserPhoto = upload.single('photo');
 
 exports.heicToJpeg = catchAsync(async (req, res, next) => {
-  if (!req.file.mimetype.endsWith('heic')) return next();
+  if (!req.file || !req.file.mimetype.endsWith('heic')) return next();
   const outputBuffer = await heicConvert({
     buffer: req.file.buffer,
     format: 'JPEG',
